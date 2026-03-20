@@ -11,7 +11,6 @@ container target:
 iso target:
     {{image-builder}} build --bootc-ref localhost/{{target}}-installer --bootc-default-fs ext4 `just _payload_ref_flag {{target}}` bootc-generic-iso
 
-# We need some patches that are not yet available upstream, so let's build a custom version.
 build-image-builder:
     #!/bin/bash
     set -euo pipefail
@@ -24,9 +23,6 @@ build-image-builder:
         cd image-builder-cli
     fi
     go mod tidy
-    go mod edit -replace github.com/osbuild/images=github.com/ondrejbudai/images@bootc-generic-iso-dev
-    # GOPROXY=direct so we always fetch the latest bootc-generic-iso-dev branch
-    GOPROXY=direct go mod tidy
     podman build -t {{image-builder-dev}} .
 
 iso-in-container target:
