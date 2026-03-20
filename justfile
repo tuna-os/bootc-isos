@@ -17,13 +17,13 @@ build-image-builder:
     if [ -d image-builder-cli ]; then
         cd image-builder-cli
         git fetch origin
-        git reset --hard origin/main
+        git checkout 81814bf8e8
     else
         git clone https://github.com/osbuild/image-builder-cli.git
         cd image-builder-cli
+        git checkout 81814bf8e8
     fi
-    go mod tidy
-    go mod edit -replace github.com/osbuild/images=github.com/tuna-os/images@bootc-generic-iso-dev
+    go mod edit -replace github.com/osbuild/images=github.com/ondrejbudai/images@bootc-generic-iso-dev
     GOPROXY=direct go mod tidy
     podman build -t {{image-builder-dev}} .
 
