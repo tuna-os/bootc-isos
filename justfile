@@ -23,6 +23,8 @@ build-image-builder:
         cd image-builder-cli
     fi
     go mod tidy
+    go mod edit -replace github.com/osbuild/images=github.com/tuna-os/images@bootc-generic-iso-dev
+    GOPROXY=direct go mod tidy
     podman build -t {{image-builder-dev}} .
 
 iso-in-container target:
